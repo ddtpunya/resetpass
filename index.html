@@ -2,129 +2,136 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DDT</title>
+<title>Secure Reset Portal</title>
 
 <style>
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #1f2937, #0f172a);
-  color: #e5e7eb;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: #0b0f17;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-/* CARD */
-.card {
-  width: 440px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px;
-  padding: 26px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-}
-
-h2 {
-  text-align: center;
-  font-weight: 600;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-}
-
-/* INPUT (lebih presisi) */
-input {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 12px;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 8px;
-  outline: none;
-  background: rgba(255,255,255,0.06);
   color: #e5e7eb;
+}
+
+/* OUTER FRAME */
+.wrapper {
+  width: 460px;
+  padding: 18px;
+}
+
+/* CARD (BANK / APPLE STYLE) */
+.card {
+  background: linear-gradient(180deg, #121826, #0f172a);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+}
+
+/* HEADER */
+h1 {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(156,163,175,0.8);
+  margin-bottom: 22px;
+}
+
+/* INPUT */
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  color: white;
   font-size: 13px;
-  letter-spacing: 0.3px;
+  outline: none;
   transition: 0.2s;
 }
 
-input:focus {
-  border: 1px solid rgba(59, 130, 246, 0.7);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-  background: rgba(255,255,255,0.08);
-}
-
-input::placeholder {
-  color: rgba(156, 163, 175, 0.8);
-  font-size: 12px;
+.input:focus {
+  border-color: rgba(59,130,246,0.7);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
 }
 
 /* BUTTON */
-button {
+.btn {
   width: 100%;
   padding: 12px;
+  border-radius: 12px;
   border: none;
-  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
+  font-size: 13px;
   transition: 0.2s;
 }
 
 .btn-primary {
-  background: #3b82f6;
+  background: #2563eb;
   color: white;
 }
 
 .btn-primary:hover {
-  background: #2563eb;
+  background: #1d4ed8;
 }
 
+/* RESULT PANEL */
+.result {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 12.5px;
+  line-height: 1.6;
+  white-space: pre-line;
+  min-height: 140px;
+  color: #e5e7eb;
+}
+
+/* COPY BUTTON */
 .btn-copy {
   margin-top: 10px;
-  background: #10b981;
-  color: white;
+  background: rgba(16,185,129,0.15);
+  color: #34d399;
+  border: 1px solid rgba(16,185,129,0.3);
 }
 
 .btn-copy:hover {
-  background: #059669;
-}
-
-/* RESULT */
-.result {
-  margin-top: 18px;
-  padding: 14px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.05);
-  font-size: 13px;
-  line-height: 1.6;
-  white-space: pre-line;
-  border: 1px solid rgba(255,255,255,0.08);
-  min-height: 130px;
+  background: rgba(16,185,129,0.25);
 }
 
 /* TOAST */
 #toast {
-  visibility: hidden;
-  min-width: 180px;
-  background: rgba(16, 185, 129, 0.95);
-  color: white;
-  text-align: center;
-  border-radius: 10px;
-  padding: 12px;
   position: fixed;
   left: 50%;
   bottom: 40px;
   transform: translateX(-50%);
-  font-size: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 12px;
   opacity: 0;
-  transition: all 0.4s ease;
+  visibility: hidden;
+  transition: 0.3s;
 }
 
 #toast.show {
-  visibility: visible;
   opacity: 1;
+  visibility: visible;
   bottom: 60px;
 }
 </style>
@@ -132,21 +139,25 @@ button {
 
 <body>
 
-<div class="card">
-  <h2>Password Reset System</h2>
+<div class="wrapper">
+  <div class="card">
 
-  <input type="text" id="username" placeholder="Enter User ID">
+    <h1>Secure Reset Portal</h1>
+    <div class="subtitle">Authentication & Password Recovery System</div>
 
-  <button class="btn-primary" onclick="generate()">Generate Reset</button>
+    <input class="input" type="text" id="username" placeholder="User ID">
 
-  <div class="result" id="output">
+    <button class="btn btn-primary" onclick="generate()">Generate Reset</button>
+
+    <div class="result" id="output">
 System ready...
-  </div>
+    </div>
 
-  <button class="btn-copy" onclick="copyResult()">Copy Result</button>
+    <button class="btn btn-copy" onclick="copyResult()">Copy Result</button>
+
+  </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
 <script>
@@ -173,46 +184,47 @@ function generate() {
   let user = document.getElementById("username").value.trim();
 
   if (!user) {
-    showToast("User ID wajib diisi!");
+    showToast("User ID required");
     return;
   }
 
   let pass = randomCode();
 
   lastResult =
-`Yth, Kami sudah berhasil Mereset kembali password anda,
+`SECURE NOTIFICATION
 
-User ID : ${user}
-Password : ${pass}
+Password reset request completed successfully.
 
-Silahkan mencoba login kembali ya bosku,
-Mohon Rahasiakan data anda dari orang lain,
-Silahkan ke menu ubah Password untuk mengubah Password anda kembali ya bosku,
+User ID  : ${user}
+Password  : ${pass}
 
-Terima kasih.`;
+Please use the new credentials to access your account.
+Keep your credentials confidential.
+
+Thank you.`;
 
   document.getElementById("output").innerText = lastResult;
 }
 
 function copyResult() {
   if (!lastResult) {
-    showToast("No data to copy!");
+    showToast("Nothing to copy");
     return;
   }
 
   navigator.clipboard.writeText(lastResult)
-    .then(() => showToast("Copied to clipboard!"))
-    .catch(() => showToast("Copy failed!"));
+    .then(() => showToast("Copied"))
+    .catch(() => showToast("Failed"));
 }
 
-function showToast(message) {
+function showToast(msg) {
   const toast = document.getElementById("toast");
-  toast.innerText = message;
+  toast.innerText = msg;
   toast.classList.add("show");
 
   setTimeout(() => {
     toast.classList.remove("show");
-  }, 2000);
+  }, 1800);
 }
 </script>
 
