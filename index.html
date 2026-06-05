@@ -34,20 +34,30 @@ h2 {
   letter-spacing: 1px;
 }
 
-/* INPUT */
 input {
   width: 100%;
-  padding: 12px;
+  padding: 10px 12px;
   margin-bottom: 12px;
-  border: none;
-  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
   outline: none;
+  background: rgba(255,255,255,0.06);
+  color: #e5e7eb;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  transition: 0.2s;
+}
+
+/* fokus lebih presisi */
+input:focus {
+  border: 1px solid rgba(59, 130, 246, 0.7);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
   background: rgba(255,255,255,0.08);
-  color: white;
 }
 
 input::placeholder {
-  color: #9ca3af;
+  color: rgba(156, 163, 175, 0.8);
+  font-size: 12px;
 }
 
 /* BUTTON */
