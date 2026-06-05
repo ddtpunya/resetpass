@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,28 +7,32 @@
 
 <style>
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
 }
 
 body{
-    margin:0;
     min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
     background:#0b1220;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     color:#fff;
+    padding:20px;
 }
 
 .card{
-    width:480px;
-    max-width:95%;
+    width:500px;
+    max-width:100%;
     background:linear-gradient(180deg,#111827,#0f172a);
     border:1px solid rgba(255,255,255,.08);
-    border-radius:20px;
+    border-radius:24px;
     padding:28px;
-    box-shadow:0 30px 80px rgba(0,0,0,.55);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.5),
+        0 0 0 1px rgba(255,255,255,.03);
 }
 
 .header{
@@ -37,26 +41,25 @@ body{
 }
 
 .header h1{
-    margin:0;
-    font-size:20px;
+    font-size:22px;
     font-weight:600;
+    margin-bottom:6px;
 }
 
 .header p{
-    margin-top:6px;
     color:#94a3b8;
-    font-size:12px;
+    font-size:13px;
 }
 
-.status-bar{
+.status{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:16px;
-    padding:10px 14px;
-    border-radius:12px;
+    padding:12px 14px;
+    border-radius:14px;
     background:rgba(255,255,255,.03);
     border:1px solid rgba(255,255,255,.06);
+    margin-bottom:16px;
 }
 
 .live{
@@ -65,9 +68,10 @@ body{
     gap:8px;
     font-size:12px;
     color:#34d399;
+    font-weight:600;
 }
 
-.live-dot{
+.dot{
     width:8px;
     height:8px;
     border-radius:50%;
@@ -86,59 +90,31 @@ body{
     color:#cbd5e1;
 }
 
-.input{
-    width:100%;
-    padding:13px 14px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,.08);
+.result{
+    margin-top:15px;
+    padding:18px;
+    border-radius:16px;
     background:rgba(255,255,255,.03);
-    color:white;
-    outline:none;
-    margin-bottom:14px;
+    border:1px solid rgba(255,255,255,.06);
+    min-height:220px;
+    white-space:pre-line;
+    line-height:1.8;
     font-size:13px;
 }
 
-.input:focus{
-    border-color:#3b82f6;
-    box-shadow:0 0 0 3px rgba(59,130,246,.15);
-}
-
-.btn{
+.btn-copy{
     width:100%;
+    margin-top:14px;
     border:none;
     cursor:pointer;
     padding:13px;
-    border-radius:12px;
-    font-weight:600;
-    transition:.2s;
-}
-
-.btn-primary{
-    background:#2563eb;
-    color:white;
-}
-
-.btn-primary:hover{
-    background:#1d4ed8;
-}
-
-.result{
-    margin-top:15px;
-    padding:16px;
     border-radius:14px;
-    border:1px solid rgba(255,255,255,.06);
-    background:rgba(255,255,255,.03);
-    white-space:pre-line;
-    font-size:12.5px;
-    line-height:1.7;
-    min-height:180px;
-}
-
-.btn-copy{
-    margin-top:12px;
+    font-weight:600;
+    font-size:13px;
     background:rgba(16,185,129,.15);
     color:#34d399;
     border:1px solid rgba(16,185,129,.3);
+    transition:.2s;
 }
 
 .btn-copy:hover{
@@ -177,33 +153,22 @@ body{
         <p>Authentication & Password Recovery System</p>
     </div>
 
-    <div class="status-bar">
+    <div class="status">
         <div class="live">
-            <span class="live-dot"></span>
+            <span class="dot"></span>
             <span>SYSTEM ONLINE</span>
         </div>
 
         <div class="countdown">
-            Next refresh: <span id="timer">10</span>s
+            Next Refresh: <span id="timer">10</span>s
         </div>
     </div>
 
-    <input
-        type="text"
-        id="username"
-        class="input"
-        placeholder="Enter User ID"
-    >
-
-    <button class="btn btn-primary" onclick="generate()">
-        Generate Reset
-    </button>
-
     <div id="output" class="result">
-System ready...
+Initializing system...
     </div>
 
-    <button class="btn btn-copy" onclick="copyResult()">
+    <button class="btn-copy" onclick="copyResult()">
         Copy Result
     </button>
 
@@ -216,37 +181,31 @@ let lastResult = "";
 let countdown = 10;
 
 function randomCode() {
+
     const letters = "abcdefghijklmnopqrstuvwxyz";
     const numbers = "0123456789";
 
     let result = "";
 
     for(let i=0;i<3;i++){
-        result += letters[Math.floor(Math.random()*letters.length)];
+        result += letters[Math.floor(Math.random() * letters.length)];
     }
 
     for(let i=0;i<3;i++){
-        result += numbers[Math.floor(Math.random()*numbers.length)];
+        result += numbers[Math.floor(Math.random() * numbers.length)];
     }
 
     return result;
 }
 
-function generate(){
-
-    const user = document.getElementById("username").value.trim();
-
-    if(!user){
-        showToast("User ID required");
-        return;
-    }
+function generate() {
 
     const password = randomCode();
 
     lastResult =
 `Yth, Kami sudah berhasil Mereset kembali password anda,
 
-User ID : ${user}
+User ID :
 Password : ${password}
 
 Silahkan mencoba login kembali ya bosku,
@@ -260,7 +219,7 @@ Terima kasih.`;
     countdown = 10;
 }
 
-function copyResult(){
+function copyResult() {
 
     if(!lastResult){
         showToast("Nothing to copy");
@@ -268,7 +227,7 @@ function copyResult(){
     }
 
     navigator.clipboard.writeText(lastResult)
-        .then(() => showToast("Copied"))
+        .then(() => showToast("Copied to clipboard"))
         .catch(() => showToast("Copy failed"));
 }
 
@@ -284,7 +243,8 @@ function showToast(message){
     }, 1800);
 }
 
-/* Countdown + Auto Generate */
+generate();
+
 setInterval(() => {
 
     document.getElementById("timer").innerText = countdown;
@@ -292,16 +252,7 @@ setInterval(() => {
     countdown--;
 
     if(countdown < 0){
-
-        const user = document
-            .getElementById("username")
-            .value
-            .trim();
-
-        if(user){
-            generate();
-        }
-
+        generate();
         countdown = 10;
     }
 
