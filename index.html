@@ -172,19 +172,11 @@ function generate() {
   let pass = randomCode();
 
   lastResult =
-`SYSTEM NOTIFICATION
-
-Dear User,
-
-Your password reset request has been successfully processed.
-
-User ID   : ${user}
-Password   : ${pass}
-
-Please use the new password to login.
-Do not share your credentials with anyone.
-
-Thank you.`;
+`Yth, Kami sudah berhasil Mereset kembali password anda,
+User ID : ${user}
+Password : ${pass}
+Silahkan mencoba login kembali ya bosku,
+Mohon Rahasiakan data anda dari orang lain, dan silahkan ke menu ubah Password untuk mengubah Password anda kembali ya bosku, Terima kasih`;
 
   document.getElementById("output").innerText = lastResult;
 }
