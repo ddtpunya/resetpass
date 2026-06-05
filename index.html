@@ -18,11 +18,11 @@ body {
 
 /* CARD */
 .card {
-  width: 420px;
+  width: 440px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 16px;
-  padding: 25px;
+  padding: 26px;
   backdrop-filter: blur(12px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
@@ -34,6 +34,7 @@ h2 {
   letter-spacing: 1px;
 }
 
+/* INPUT (lebih presisi) */
 input {
   width: 100%;
   padding: 10px 12px;
@@ -48,7 +49,6 @@ input {
   transition: 0.2s;
 }
 
-/* fokus lebih presisi */
 input:focus {
   border: 1px solid rgba(59, 130, 246, 0.7);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
@@ -97,10 +97,10 @@ button {
   border-radius: 10px;
   background: rgba(255,255,255,0.05);
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.6;
   white-space: pre-line;
   border: 1px solid rgba(255,255,255,0.08);
-  min-height: 120px;
+  min-height: 130px;
 }
 
 /* TOAST */
@@ -119,7 +119,7 @@ button {
   font-size: 14px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   opacity: 0;
-  transition: opacity 0.4s, bottom 0.4s;
+  transition: all 0.4s ease;
 }
 
 #toast.show {
@@ -147,7 +147,7 @@ System ready...
 </div>
 
 <!-- TOAST -->
-<div id="toast">Copied!</div>
+<div id="toast"></div>
 
 <script>
 let lastResult = "";
@@ -158,12 +158,10 @@ function randomCode() {
 
   let code = "";
 
-  // 3 huruf kecil
   for (let i = 0; i < 3; i++) {
     code += letters[Math.floor(Math.random() * letters.length)];
   }
 
-  // 3 angka
   for (let i = 0; i < 3; i++) {
     code += numbers[Math.floor(Math.random() * numbers.length)];
   }
@@ -172,7 +170,7 @@ function randomCode() {
 }
 
 function generate() {
-  let user = document.getElementById("username").value;
+  let user = document.getElementById("username").value.trim();
 
   if (!user) {
     showToast("User ID wajib diisi!");
@@ -183,10 +181,15 @@ function generate() {
 
   lastResult =
 `Yth, Kami sudah berhasil Mereset kembali password anda,
+
 User ID : ${user}
 Password : ${pass}
+
 Silahkan mencoba login kembali ya bosku,
-Mohon Rahasiakan data anda dari orang lain, dan silahkan ke menu ubah Password untuk mengubah Password anda kembali ya bosku, Terima kasih`;
+Mohon Rahasiakan data anda dari orang lain,
+Silahkan ke menu ubah Password untuk mengubah Password anda kembali ya bosku,
+
+Terima kasih.`;
 
   document.getElementById("output").innerText = lastResult;
 }
