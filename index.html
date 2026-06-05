@@ -152,16 +152,16 @@ body{
         <h1>RANDOM PASSWORD</h1>
     </div>
 
-    <div class="status">
-        <div class="live">
-            <span class="dot"></span>
-            <span>SYSTEM ONLINE</span>
-        </div>
-
-        <div class="countdown">
-            Refresh Interval: 1 Second
-        </div>
+   <div class="status">
+    <div class="live">
+        <span class="dot"></span>
+        <span>AUTO REFRESH ACTIVE</span>
     </div>
+
+    <div class="countdown">
+        Refresh Interval: 1 Second
+    </div>
+</div>
 
     <div id="output" class="result">
 Initializing system...
@@ -177,7 +177,9 @@ Initializing system...
 
 <script>
 let lastResult = "";
-let countdown = 1;
+setInterval(() => {
+    generate();
+}, 1000);
 
 function randomCode() {
 
@@ -244,18 +246,6 @@ function showToast(message){
 
 generate();
 
-setInterval(() => {
-
-    document.getElementById("timer").innerText = countdown;
-
-    countdown--;
-
-    if(countdown < 0){
-        generate();
-        countdown = 10;
-    }
-
-}, 1000);
 </script>
 
 </body>
