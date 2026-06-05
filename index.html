@@ -1,10 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Website Pertamaku</title>
+<meta charset="UTF-8">
+<title>Random Code Generator</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1e1e2f, #2c2c54);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  border-radius: 15px;
+  width: 350px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #00c6ff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0099cc;
+}
+
+.copy-btn {
+  background: #28a745;
+  margin-top: 8px;
+}
+
+.copy-btn:hover {
+  background: #1f8f3a;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 10px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  white-space: pre-line;
+}
+</style>
 </head>
+
 <body>
-  <h1>Hello World 👋</h1>
-  <p>Website ini online dari GitHub Pages</p>
+
+<div class="container">
+  <h2>Random Generator</h2>
+
+  <input type="text" id="username" placeholder="Masukkan username">
+  <input type="text" id="label" placeholder="Label password (opsional)">
+
+  <button onclick="generate()">Generate</button>
+
+  <div class="result" id="output">
+    Hasil akan muncul di sini
+  </div>
+
+  <button class="copy-btn" onclick="copyResult()">Copy Hasil</button>
+</div>
+
+<script>
+let lastResult = "";
+
+function randomCode() {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const numbers = "0123456789";
+
+  let result = "";
+
+  for (let i = 0; i < 3; i++) {
+    result += letters.charAt(Math.floor(Math.random() * letters.length));
+  }
+
+  for (let i = 0; i < 3; i++) {
+    result += numbers.charAt(Math.floor(Math.random() * numbers.length));
+  }
+
+  return result;
+}
+
+function generate() {
+  let user = document.getElementById("username").value;
+  let label = document.getElementById("label").value;
+
+  if (user === "") {
+    alert("Username harus diisi!");
+    return;
+  }
+
+  let code = randomCode();
+
+  lastResult = `username : ${user}\n${label || "password"} : ${code}`;
+
+  document.getElementById("output").innerHTML = lastResult.replace(/\n/g, "<br>");
+}
+
+function copyResult() {
+  if (lastResult === "") {
+    alert("Belum ada hasil untuk di-copy!");
+    return;
+  }
+
+  navigator.clipboard.writeText(lastResult)
+    .then(() => {
+      alert("Hasil berhasil di-copy!");
+    })
+    .catch(() => {
+      alert("Gagal copy, browser tidak mendukung.");
+    });
+}
+</script>
+
 </body>
 </html>
