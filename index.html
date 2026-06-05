@@ -2,224 +2,310 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secure Reset Portal</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  background: #0b0f17;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: #e5e7eb;
+*{
+    box-sizing:border-box;
 }
 
-/* OUTER FRAME */
-.wrapper {
-  width: 460px;
-  padding: 18px;
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#0b1220;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:#fff;
 }
 
-/* CARD (BANK / APPLE STYLE) */
-.card {
-  background: linear-gradient(180deg, #121826, #0f172a);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+.card{
+    width:480px;
+    max-width:95%;
+    background:linear-gradient(180deg,#111827,#0f172a);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:28px;
+    box-shadow:0 30px 80px rgba(0,0,0,.55);
 }
 
-/* HEADER */
-h1 {
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 6px;
+.header{
+    text-align:center;
+    margin-bottom:20px;
 }
 
-.subtitle {
-  text-align: center;
-  font-size: 12px;
-  color: rgba(156,163,175,0.8);
-  margin-bottom: 22px;
+.header h1{
+    margin:0;
+    font-size:20px;
+    font-weight:600;
 }
 
-/* INPUT */
-.input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
-  color: white;
-  font-size: 13px;
-  outline: none;
-  transition: 0.2s;
+.header p{
+    margin-top:6px;
+    color:#94a3b8;
+    font-size:12px;
 }
 
-.input:focus {
-  border-color: rgba(59,130,246,0.7);
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+.status-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+    padding:10px 14px;
+    border-radius:12px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
 }
 
-/* BUTTON */
-.btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  transition: 0.2s;
+.live{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    color:#34d399;
 }
 
-.btn-primary {
-  background: #2563eb;
-  color: white;
+.live-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#34d399;
+    animation:pulse 1.5s infinite;
 }
 
-.btn-primary:hover {
-  background: #1d4ed8;
+@keyframes pulse{
+    0%{opacity:1}
+    50%{opacity:.3}
+    100%{opacity:1}
 }
 
-/* RESULT PANEL */
-.result {
-  margin-top: 16px;
-  padding: 16px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  font-size: 12.5px;
-  line-height: 1.6;
-  white-space: pre-line;
-  min-height: 140px;
-  color: #e5e7eb;
+.countdown{
+    font-size:12px;
+    color:#cbd5e1;
 }
 
-/* COPY BUTTON */
-.btn-copy {
-  margin-top: 10px;
-  background: rgba(16,185,129,0.15);
-  color: #34d399;
-  border: 1px solid rgba(16,185,129,0.3);
+.input{
+    width:100%;
+    padding:13px 14px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.03);
+    color:white;
+    outline:none;
+    margin-bottom:14px;
+    font-size:13px;
 }
 
-.btn-copy:hover {
-  background: rgba(16,185,129,0.25);
+.input:focus{
+    border-color:#3b82f6;
+    box-shadow:0 0 0 3px rgba(59,130,246,.15);
 }
 
-/* TOAST */
-#toast {
-  position: fixed;
-  left: 50%;
-  bottom: 40px;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.8);
-  color: white;
-  padding: 10px 14px;
-  border-radius: 999px;
-  font-size: 12px;
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s;
+.btn{
+    width:100%;
+    border:none;
+    cursor:pointer;
+    padding:13px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.2s;
 }
 
-#toast.show {
-  opacity: 1;
-  visibility: visible;
-  bottom: 60px;
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+}
+
+.result{
+    margin-top:15px;
+    padding:16px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.06);
+    background:rgba(255,255,255,.03);
+    white-space:pre-line;
+    font-size:12.5px;
+    line-height:1.7;
+    min-height:180px;
+}
+
+.btn-copy{
+    margin-top:12px;
+    background:rgba(16,185,129,.15);
+    color:#34d399;
+    border:1px solid rgba(16,185,129,.3);
+}
+
+.btn-copy:hover{
+    background:rgba(16,185,129,.25);
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:40px;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,.85);
+    color:white;
+    padding:10px 16px;
+    border-radius:999px;
+    font-size:12px;
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+}
+
+.toast.show{
+    opacity:1;
+    visibility:visible;
+    bottom:60px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-  <div class="card">
+<div class="card">
 
-    <h1>Secure Reset Portal</h1>
-    <div class="subtitle">Authentication & Password Recovery System</div>
+    <div class="header">
+        <h1>Secure Reset Portal</h1>
+        <p>Authentication & Password Recovery System</p>
+    </div>
 
-    <input class="input" type="text" id="username" placeholder="User ID">
+    <div class="status-bar">
+        <div class="live">
+            <span class="live-dot"></span>
+            <span>SYSTEM ONLINE</span>
+        </div>
 
-    <button class="btn btn-primary" onclick="generate()">Generate Reset</button>
+        <div class="countdown">
+            Next refresh: <span id="timer">10</span>s
+        </div>
+    </div>
 
-    <div class="result" id="output">
+    <input
+        type="text"
+        id="username"
+        class="input"
+        placeholder="Enter User ID"
+    >
+
+    <button class="btn btn-primary" onclick="generate()">
+        Generate Reset
+    </button>
+
+    <div id="output" class="result">
 System ready...
     </div>
 
-    <button class="btn btn-copy" onclick="copyResult()">Copy Result</button>
+    <button class="btn btn-copy" onclick="copyResult()">
+        Copy Result
+    </button>
 
-  </div>
 </div>
 
-<div id="toast"></div>
+<div id="toast" class="toast"></div>
 
 <script>
 let lastResult = "";
+let countdown = 10;
 
 function randomCode() {
-  const letters = "abcdefghijklmnopqrstuvwxyz";
-  const numbers = "0123456789";
+    const letters = "abcdefghijklmnopqrstuvwxyz";
+    const numbers = "0123456789";
 
-  let code = "";
+    let result = "";
 
-  for (let i = 0; i < 3; i++) {
-    code += letters[Math.floor(Math.random() * letters.length)];
-  }
+    for(let i=0;i<3;i++){
+        result += letters[Math.floor(Math.random()*letters.length)];
+    }
 
-  for (let i = 0; i < 3; i++) {
-    code += numbers[Math.floor(Math.random() * numbers.length)];
-  }
+    for(let i=0;i<3;i++){
+        result += numbers[Math.floor(Math.random()*numbers.length)];
+    }
 
-  return code;
+    return result;
 }
 
-function generate() {
-  let user = document.getElementById("username").value.trim();
+function generate(){
 
-  if (!user) {
-    showToast("User ID required");
-    return;
-  }
+    const user = document.getElementById("username").value.trim();
 
-  let pass = randomCode();
+    if(!user){
+        showToast("User ID required");
+        return;
+    }
 
-  lastResult =
+    const password = randomCode();
+
+    lastResult =
 `Yth, Kami sudah berhasil Mereset kembali password anda,
+
 User ID : ${user}
-Password : ${pass}
+Password : ${password}
+
 Silahkan mencoba login kembali ya bosku,
-Mohon Rahasiakan data anda dari orang lain, dan silahkan ke menu ubah Password untuk mengubah Password anda kembali ya bosku, Terima kasih`;
 
-  document.getElementById("output").innerText = lastResult;
+Mohon Rahasiakan data anda dari orang lain, dan silahkan ke menu ubah Password untuk mengubah Password anda kembali ya bosku.
+
+Terima kasih.`;
+
+    document.getElementById("output").innerText = lastResult;
+
+    countdown = 10;
 }
 
-function copyResult() {
-  if (!lastResult) {
-    showToast("Nothing to copy");
-    return;
-  }
+function copyResult(){
 
-  navigator.clipboard.writeText(lastResult)
-    .then(() => showToast("Copied"))
-    .catch(() => showToast("Failed"));
+    if(!lastResult){
+        showToast("Nothing to copy");
+        return;
+    }
+
+    navigator.clipboard.writeText(lastResult)
+        .then(() => showToast("Copied"))
+        .catch(() => showToast("Copy failed"));
 }
 
-function showToast(msg) {
-  const toast = document.getElementById("toast");
-  toast.innerText = msg;
-  toast.classList.add("show");
+function showToast(message){
 
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 1800);
+    const toast = document.getElementById("toast");
+
+    toast.innerText = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1800);
 }
+
+/* Countdown + Auto Generate */
+setInterval(() => {
+
+    document.getElementById("timer").innerText = countdown;
+
+    countdown--;
+
+    if(countdown < 0){
+
+        const user = document
+            .getElementById("username")
+            .value
+            .trim();
+
+        if(user){
+            generate();
+        }
+
+        countdown = 10;
+    }
+
+}, 1000);
 </script>
 
 </body>
