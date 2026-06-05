@@ -16,6 +16,7 @@ body {
   height: 100vh;
 }
 
+/* CARD */
 .card {
   width: 420px;
   background: rgba(255,255,255,0.06);
@@ -33,6 +34,7 @@ h2 {
   letter-spacing: 1px;
 }
 
+/* INPUT */
 input {
   width: 100%;
   padding: 12px;
@@ -48,6 +50,7 @@ input::placeholder {
   color: #9ca3af;
 }
 
+/* BUTTON */
 button {
   width: 100%;
   padding: 12px;
@@ -77,6 +80,7 @@ button {
   background: #059669;
 }
 
+/* RESULT */
 .result {
   margin-top: 18px;
   padding: 14px;
@@ -86,6 +90,32 @@ button {
   line-height: 1.5;
   white-space: pre-line;
   border: 1px solid rgba(255,255,255,0.08);
+  min-height: 120px;
+}
+
+/* TOAST */
+#toast {
+  visibility: hidden;
+  min-width: 180px;
+  background: rgba(16, 185, 129, 0.95);
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  padding: 12px;
+  position: fixed;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  font-size: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  opacity: 0;
+  transition: opacity 0.4s, bottom 0.4s;
+}
+
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 60px;
 }
 </style>
 </head>
@@ -106,6 +136,9 @@ System ready...
   <button class="btn-copy" onclick="copyResult()">Copy Result</button>
 </div>
 
+<!-- TOAST -->
+<div id="toast">Copied!</div>
+
 <script>
 let lastResult = "";
 
@@ -115,10 +148,12 @@ function randomCode() {
 
   let code = "";
 
+  // 3 huruf kecil
   for (let i = 0; i < 3; i++) {
     code += letters[Math.floor(Math.random() * letters.length)];
   }
 
+  // 3 angka
   for (let i = 0; i < 3; i++) {
     code += numbers[Math.floor(Math.random() * numbers.length)];
   }
@@ -130,7 +165,7 @@ function generate() {
   let user = document.getElementById("username").value;
 
   if (!user) {
-    alert("User ID wajib diisi!");
+    showToast("User ID wajib diisi!");
     return;
   }
 
@@ -147,22 +182,32 @@ User ID   : ${user}
 Password   : ${pass}
 
 Please use the new password to login.
-For security reasons, do not share your credentials with anyone.
+Do not share your credentials with anyone.
 
 Thank you.`;
 
-  document.getElementById("output").innerHTML = lastResult;
+  document.getElementById("output").innerText = lastResult;
 }
 
 function copyResult() {
   if (!lastResult) {
-    alert("No data to copy!");
+    showToast("No data to copy!");
     return;
   }
 
   navigator.clipboard.writeText(lastResult)
-    .then(() => alert("Copied to clipboard!"))
-    .catch(() => alert("Copy failed!"));
+    .then(() => showToast("Copied to clipboard!"))
+    .catch(() => showToast("Copy failed!"));
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2000);
 }
 </script>
 
