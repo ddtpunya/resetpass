@@ -2,91 +2,108 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Random Code Generator</title>
+<title>Password Reset System</title>
+
 <style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #1e1e2f, #2c2c54);
-  color: white;
+  font-family: "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #1f2937, #0f172a);
+  color: #e5e7eb;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.container {
-  background: rgba(255,255,255,0.05);
+.card {
+  width: 420px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
   padding: 25px;
-  border-radius: 15px;
-  width: 350px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
 
 h2 {
   text-align: center;
+  font-weight: 600;
   margin-bottom: 20px;
+  letter-spacing: 1px;
 }
 
 input {
   width: 100%;
-  padding: 10px;
-  margin: 8px 0;
+  padding: 12px;
+  margin-bottom: 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   outline: none;
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+input::placeholder {
+  color: #9ca3af;
 }
 
 button {
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+  padding: 12px;
   border: none;
-  border-radius: 8px;
-  background: #00c6ff;
-  color: white;
-  font-weight: bold;
+  border-radius: 10px;
   cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
 }
 
-button:hover {
-  background: #0099cc;
+.btn-primary {
+  background: #3b82f6;
+  color: white;
 }
 
-.copy-btn {
-  background: #28a745;
-  margin-top: 8px;
+.btn-primary:hover {
+  background: #2563eb;
 }
 
-.copy-btn:hover {
-  background: #1f8f3a;
+.btn-copy {
+  margin-top: 10px;
+  background: #10b981;
+  color: white;
+}
+
+.btn-copy:hover {
+  background: #059669;
 }
 
 .result {
-  margin-top: 20px;
-  padding: 10px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 8px;
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  font-size: 13px;
+  line-height: 1.5;
   white-space: pre-line;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <h2>Random Generator</h2>
+<div class="card">
+  <h2>Password Reset System</h2>
 
-  <input type="text" id="username" placeholder="Masukkan username">
+  <input type="text" id="username" placeholder="Enter User ID">
 
-  <button onclick="generate()">Generate</button>
+  <button class="btn-primary" onclick="generate()">Generate Reset</button>
 
   <div class="result" id="output">
-    Hasil akan muncul di sini
+System ready...
   </div>
 
-  <button class="copy-btn" onclick="copyResult()">Copy Hasil</button>
+  <button class="btn-copy" onclick="copyResult()">Copy Result</button>
 </div>
 
 <script>
@@ -96,49 +113,56 @@ function randomCode() {
   const letters = "abcdefghijklmnopqrstuvwxyz";
   const numbers = "0123456789";
 
-  let result = "";
+  let code = "";
 
-  // 3 huruf kecil
   for (let i = 0; i < 3; i++) {
-    result += letters.charAt(Math.floor(Math.random() * letters.length));
+    code += letters[Math.floor(Math.random() * letters.length)];
   }
 
-  // 3 angka
   for (let i = 0; i < 3; i++) {
-    result += numbers.charAt(Math.floor(Math.random() * numbers.length));
+    code += numbers[Math.floor(Math.random() * numbers.length)];
   }
 
-  return result;
+  return code;
 }
 
 function generate() {
   let user = document.getElementById("username").value;
 
-  if (user === "") {
-    alert("Username harus diisi!");
+  if (!user) {
+    alert("User ID wajib diisi!");
     return;
   }
 
-  let code = randomCode();
+  let pass = randomCode();
 
-  lastResult = `Yth, Kami sudah berhasil Mereset kembali password anda,
-User ID : ${user}
-Password : ${code}
-Silahkan mencoba login kembali ya bosku,
-Mohon Rahasiakan data anda dari orang lain, dan silahkan ke menu ubah Password untuk mengubah Password anda kembali ya bosku, Terima kasih`;
+  lastResult =
+`SYSTEM NOTIFICATION
 
-  document.getElementById("output").innerHTML = lastResult.replace(/\n/g, "<br>");
+Dear User,
+
+Your password reset request has been successfully processed.
+
+User ID   : ${user}
+Password   : ${pass}
+
+Please use the new password to login.
+For security reasons, do not share your credentials with anyone.
+
+Thank you.`;
+
+  document.getElementById("output").innerHTML = lastResult;
 }
 
 function copyResult() {
-  if (lastResult === "") {
-    alert("Belum ada hasil untuk di-copy!");
+  if (!lastResult) {
+    alert("No data to copy!");
     return;
   }
 
   navigator.clipboard.writeText(lastResult)
-    .then(() => alert("Hasil berhasil di-copy!"))
-    .catch(() => alert("Gagal copy!"));
+    .then(() => alert("Copied to clipboard!"))
+    .catch(() => alert("Copy failed!"));
 }
 </script>
 
