@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ddtpunya.github.io/resetpass/sitemap.xml
